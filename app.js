@@ -1,6 +1,6 @@
 const matches = [
   {
-    score: 96,
+    score: 99,
     home: "Malmo FF",
     away: "Hammarby"
   },
