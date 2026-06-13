@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  background: #0B1220;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+  color: #94A3B8;
+}
+
+.card {
+  background: #111827;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.score {
+  font-size: 42px;
+  font-weight: bold;
+  color: #22C55E;
+}
+
+.match {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.badge {
+  color: #FBBF24;
+  font-weight: bold;
+  margin-top: 10px;
+}
