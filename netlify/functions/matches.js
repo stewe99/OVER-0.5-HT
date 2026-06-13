@@ -2,7 +2,7 @@ exports.handler = async function () {
   const apiKey = process.env.API_FOOTBALL_KEY;
 
   try {
-    const today = new Date().toISOString().split("T")[0];
+    const today = "2026-06-14";
 
     const response = await fetch(
       `https://v3.football.api-sports.io/fixtures?date=${today}`,
