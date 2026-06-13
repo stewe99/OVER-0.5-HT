@@ -31,3 +31,6 @@ matches.forEach(match => {
     </div>
   `;
 });
+const oggi = new Date();
+document.getElementById("data").innerHTML =
+"Aggiornato: " + oggi.toLocaleDateString("it-IT");
