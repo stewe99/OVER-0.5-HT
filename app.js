@@ -1,36 +1,27 @@
-const matches = [
-  {
-    score: 98,
-    home: "Malmo FF",
-    away: "Hammarby"
-  },
-  {
-    score: 95,
-    home: "Bodo/Glimt",
-    away: "Molde"
-  },
-  {
-    score: 94,
-    home: "PSV",
-    away: "Utrecht"
-  }
-];
+async function loadMatches() {
+  const res = await fetch("/.netlify/functions/matches");
+  const matches = await res.json();
 
-const container = document.getElementById("matches");
+  const container = document.getElementById("matches");
+  container.innerHTML = "";
 
-matches.forEach(match => {
-  container.innerHTML += `
-    <div class="card">
-      <div class="score">${match.score}%</div>
-      <div class="match">
-        ${match.home}<br>
-        vs<br>
-        ${match.away}
+  matches.forEach(match => {
+    container.innerHTML += `
+      <div class="card">
+        <div class="score">${match.score}%</div>
+        <div class="match">
+          ${match.home}<br>
+          vs<br>
+          ${match.away}
+        </div>
+        <div class="badge">🔥 TOP PICK</div>
       </div>
-      <div class="badge">🔥 TOP PICK</div>
-    </div>
-  `;
-});
+    `;
+  });
+}
+
+loadMatches();
+
 const oggi = new Date();
 document.getElementById("data").innerHTML =
-"Aggiornato: " + oggi.toLocaleDateString("it-IT");
+  "Aggiornato: " + oggi.toLocaleDateString("it-IT");
