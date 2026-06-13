@@ -1,6 +1,6 @@
 exports.handler = async function () {
   const apiKey = process.env.API_FOOTBALL_KEY;
-
+console.log("API KEY PRESENTE:", !!apiKey);
   try {
     const today = "2026-06-14";
 
@@ -14,6 +14,7 @@ exports.handler = async function () {
     );
 
     const data = await response.json();
+    console.log(JSON.stringify(data));
 
     const matches = data.response.slice(0, 20).map(match => ({
       home: match.teams.home.name,
