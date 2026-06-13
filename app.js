@@ -1,6 +1,7 @@
 async function loadMatches() {
   const res = await fetch("/.netlify/functions/matches");
-  const matches = await res.json();
+  const data = await res.json();
+  const matches = data.matches;
 
   const container = document.getElementById("matches");
   container.innerHTML = "";
