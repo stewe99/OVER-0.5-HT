@@ -30,7 +30,29 @@ matches.forEach(match => {
          ${match.league}
       </div>
 
-      <div class="badge">${match.badge}</div>
+  <div class="badge">${match.badge}</div>
+ 
+  <div style="margin-top:12px">
+
+  <div style="font-weight:bold;color:#fff;">
+    ${match.status}
+  </div>
+
+  ${match.result ? `
+    <div style="margin-top:6px;color:#7ee787;">
+      ${match.result}
+    </div>
+  ` : ""}
+
+  ${
+    match.htHome !== null
+      ? `
+      <div style="margin-top:6px;color:#bbb;">
+        HT: ${match.htHome}-${match.htAway}
+      </div>
+      `
+      : ""
+  }
 
    </div>
    `;
