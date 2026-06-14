@@ -48,7 +48,7 @@ console.log("API KEY PRESENTE:", !!apiKey);
   match.league.country === "USA" ? 78 :
   75,
   
-  badge:
+badge:
 match.league.country === "Norway" ? "🔥 TOP PICK" :
 match.league.country === "Sweden" ? "⭐ VALUE" :
 match.league.country === "Denmark" ? "💎 PREMIUM" :
