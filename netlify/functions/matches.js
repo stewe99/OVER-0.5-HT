@@ -27,11 +27,29 @@ console.log("API KEY PRESENTE:", !!apiKey);
     match.league.country === "Finland"
   )
 )
-.sort((a, b) =>
-new Date(a.fixture.date) - new Date(b.fixture.date)
-)
+.sort((a, b) => {
 
+const scoreA =
+a.league.country === "Norway" ? 84 :
+a.league.country === "Sweden" ? 82 :
+a.league.country === "Denmark" ? 81 :
+a.league.country === "Finland" ? 79 :
+a.league.country === "USA" ? 78 :
+75;
+
+const scoreB =
+b.league.country === "Norway" ? 84 :
+b.league.country === "Sweden" ? 82 :
+b.league.country === "Denmark" ? 81 :
+b.league.country === "Finland" ? 79 :
+b.league.country === "USA" ? 78 :
+75;
+
+return scoreB - scoreA;
+
+})
 .slice(0,15)
+
 .map(match => ({
    home: match.teams.home.name,
    away: match.teams.away.name,
