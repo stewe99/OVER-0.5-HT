@@ -17,7 +17,6 @@ const res = await fetch("/.netlify/functions/matches");
 data = await res.json();
 localStorage.setItem("savedDate", today);
 localStorage.setItem("savedData", JSON.stringify(data));
-
 }
   document.getElementById("api-counter").innerHTML =
    `API usate oggi: ${data.apiUsed}`;
