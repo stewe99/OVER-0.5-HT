@@ -27,6 +27,10 @@ console.log("API KEY PRESENTE:", !!apiKey);
     match.league.country === "Finland"
   )
 )
+.sort((a, b) =>
+new Date(a.fixture.date) - new Date(b.fixture.date)
+)
+
 .slice(0,20)
 .map(match => ({
    home: match.teams.home.name,
