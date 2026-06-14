@@ -6,28 +6,34 @@ async function loadMatches() {
   const container = document.getElementById("matches");
   container.innerHTML = "";
 
-  container.innerHTML += `
-  <div class="card">
-    <div class="score">${match.score}%</div>
+  container.innerHTML = "";
 
-    <div class="match">
-      ${match.home}<br>
-      vs<br>
-      ${match.away}
-    </div>
+matches.forEach(match => {
 
-    <div style="margin-top:10px;font-size:15px;color:#9ca3af;">
-      🕒 ${match.time}
-    </div>
+   container.innerHTML += `
+   <div class="card">
 
-    <div style="margin-top:6px;font-size:14px;color:#60a5fa;">
-      ${match.league}
-    </div>
+      <div class="score">${match.score}%</div>
 
-    <div class="badge">🔥 TOP PICK</div>
-  </div>
-`;
-  });
+      <div class="match">
+         ${match.home}<br>
+         vs<br>
+         ${match.away}
+      </div>
+
+      <div style="margin-top:10px;font-size:15px;color:#bbb;">
+         🕒 ${match.kickoff}
+      </div>
+
+      <div style="margin-top:6px;font-size:14px;color:#888;">
+         ${match.league}
+      </div>
+
+      <div class="badge">🔥 TOP PICK</div>
+
+   </div>
+   `;
+});
 }
 
 loadMatches();
