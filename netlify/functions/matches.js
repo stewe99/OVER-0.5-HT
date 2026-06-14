@@ -31,7 +31,7 @@ console.log("API KEY PRESENTE:", !!apiKey);
 new Date(a.fixture.date) - new Date(b.fixture.date)
 )
 
-.slice(0,20)
+.slice(0,15)
 .map(match => ({
    home: match.teams.home.name,
    away: match.teams.away.name,
