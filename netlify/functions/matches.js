@@ -33,10 +33,11 @@ console.log("API KEY PRESENTE:", !!apiKey);
    away: match.teams.away.name,
   
     kickoff: new Date(match.fixture.date)
-      .toLocaleTimeString("it-IT", {
-        hour: "2-digit",
-        minute: "2-digit"
-      }),
+  .toLocaleTimeString("it-IT", {
+    timeZone: "Europe/Rome",
+    hour: "2-digit",
+    minute: "2-digit"
+  }),
 
     league: match.league.name,
 
