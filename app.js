@@ -1,11 +1,11 @@
 async function loadMatches() {
 
-const today = new Date().toLocaleDateString(“it-IT”);
+const today = new Date().toLocaleDateString("it-IT");
 
 let data;
 
-const savedDate = localStorage.getItem(“savedDate”);
-const savedData = localStorage.getItem(“savedData”);
+const savedDate = localStorage.getItem("savedDate");
+const savedData = localStorage.getItem("savedData");
 
 if (savedDate === today && savedData) {
 
