@@ -7,6 +7,8 @@ let data;
 const savedDate = localStorage.getItem("savedDate");
 const savedData = localStorage.getItem("savedData");
 
+localStorage.clear();
+
 if (savedDate === today && savedData) {
 
 data = JSON.parse(savedData);
