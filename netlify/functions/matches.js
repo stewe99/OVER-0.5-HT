@@ -18,12 +18,14 @@ console.log("API KEY PRESENTE:", !!apiKey);
 
     const matches = data.response
 .filter(match =>
-   match.fixture.status.short === "NS" &&
-   (
-      match.league.country === "USA" ||
-      match.league.country === "Norway" ||
-      match.league.country === "Sweden"
-   )
+  match.fixture.status.short === "NS" &&
+  (
+    match.league.country === "USA" ||
+    match.league.country === "Norway" ||
+    match.league.country === "Sweden" ||
+    match.league.country === "Denmark" ||
+    match.league.country === "Finland"
+  )
 )
 .slice(0,20)
 .map(match => ({
