@@ -71,6 +71,8 @@ matches.forEach(match => {
       : ""
   }
 
+      </div>
+
    </div>
    `;
 });
