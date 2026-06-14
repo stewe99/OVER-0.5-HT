@@ -62,6 +62,16 @@ return scoreB - scoreA;
   }),
 
     league: match.league.name,
+    
+    status: "⏳ DA GIOCARE",
+    result: "",
+    recovery: false,
+    
+    htHome:
+match.score?.halftime?.home ?? null,
+
+htAway:
+match.score?.halftime?.away ?? null,
 
     score:
   match.league.country === "Norway" ? 84 :
