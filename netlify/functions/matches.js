@@ -15,6 +15,8 @@ console.log("API KEY PRESENTE:", !!apiKey);
 
     const data = await response.json();
     console.log(JSON.stringify(data));
+    
+console.log("PARTITE TROVATE:", data.response.length);
 
     const matches = data.response
 .filter(match =>
@@ -52,8 +54,6 @@ b.league.country === "USA" ? 78 :
 return scoreB - scoreA;
 
 })
-
-console.log("PARTITE TROVATE:", data.response.length);
 
 .slice(0,15)
 
