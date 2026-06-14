@@ -50,82 +50,84 @@ return scoreB - scoreA;
 })
 .slice(0,15)
 
-.map(match => ({
-   home: match.teams.home.name,
-   away: match.teams.away.name,
-  
-    kickoff: new Date(match.fixture.date)
-  .toLocaleTimeString("it-IT", {
-    timeZone: "Europe/Rome",
-    hour: "2-digit",
-    minute: "2-digit"
-  }),
+.map(match => {
 
-    league: match.league.name,
-    
-    status,
-    result,
-    recovery,
-    
-    const htGoals =
-(match.score?.halftime?.home || 0) +
-(match.score?.halftime?.away || 0);
+  const htGoals =
+    (match.score?.halftime?.home || 0) +
+    (match.score?.halftime?.away || 0);
 
-const ftGoals =
-(match.goals?.home || 0) +
-(match.goals?.away || 0);
+  const ftGoals =
+    (match.goals?.home || 0) +
+    (match.goals?.away || 0);
 
-let status = "⏳ DA GIOCARE";
-let result = "";
-let recovery = false;
+  let status = "⏳ DA GIOCARE";
+  let result = "";
+  let recovery = false;
 
-if (match.fixture.status.short === "HT") {
+  if (match.fixture.status.short === "HT") {
 
-  if (htGoals > 0) {
-    status = "✅ WIN HT";
-    result = "OVER 0.5 HT PRESO";
-  } else {
-    status = "❌ LOSE HT";
-    result = "0-0 HT";
-    recovery = true;
-  }
-
-}
-
-if (match.fixture.status.short === "FT") {
-
-  if (htGoals > 0) {
-    status = "✅ WIN HT";
-    result = "OVER 0.5 HT PRESO";
-  } else {
-
-    if (ftGoals >= 2) {
-      status = "🔄 RECUPERO PRESO";
-      result = "OVER 1.5 FT WIN";
-      recovery = true;
+    if (htGoals > 0) {
+      status = "✅ WIN HT";
+      result = "OVER 0.5 HT PRESO";
     } else {
-      status = "❌ RECUPERO PERSO";
-      result = "OVER 1.5 FT LOSE";
+      status = "❌ LOSE HT";
+      result = "0-0 HT";
       recovery = true;
     }
 
   }
 
-}
-    
-    htHome:
-match.score?.halftime?.home ?? null,
+  if (match.fixture.status.short === "FT") {
 
-htAway:
-match.score?.halftime?.away ?? null,
+    if (htGoals > 0) {
+      status = "✅ WIN HT";
+      result = "OVER 0.5 HT PRESO";
+    } else {
+
+      if (ftGoals >= 2) {
+        status = "🔄 RECUPERO PRESO";
+        result = "OVER 1.5 FT WIN";
+        recovery = true;
+      } else {
+        status = "❌ RECUPERO PERSO";
+        result = "OVER 1.5 FT LOSE";
+        recovery = true;
+      }
+
+    }
+
+  }
+
+  return {
+    home: match.teams.home.name,
+    away: match.teams.away.name,
+
+    kickoff: new Date(match.fixture.date)
+      .toLocaleTimeString("it-IT", {
+        timeZone: "Europe/Rome",
+        hour: "2-digit",
+        minute: "2-digit"
+      }),
+
+    league: match.league.name,
+
+    status,
+    result,
+    recovery,
+
+    htHome: match.score?.halftime?.home ?? null,
+    htAway: match.score?.halftime?.away ?? null,
 
     score:
-  match.league.country === "Norway" ? 84 :
-  match.league.country === "Sweden" ? 82 :
-  match.league.country === "Denmark" ? 81 :
-  match.league.country === "Finland" ? 79 :
-  match.league.country === "USA" ? 78 :
-  75,
+      match.league.country === "Norway" ? 84 :
+      match.league.country === "Sweden" ? 82 :
+      match.league.country === "Denmark" ? 81 :
+      match.league.country === "Finland" ? 79 :
+      match.league.country === "USA" ? 78 :
+      75
+  };
+
+})
   
 badge:
 match.league.country === "Norway" ? "🔥 TOP PICK" :
