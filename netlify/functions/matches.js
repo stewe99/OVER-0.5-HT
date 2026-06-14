@@ -19,7 +19,7 @@ console.log("API KEY PRESENTE:", !!apiKey);
     const matches = data.response.slice(0, 20).map(match => ({
       home: match.teams.home.name,
       away: match.teams.away.name,
-      score: Math.floor(Math.random() * 11) + 90
+      score: 90 + (20 - (data.response.indexOf(match) % 20))
     }));
 
     return {
