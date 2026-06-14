@@ -1,6 +1,24 @@
 async function loadMatches() {
-  const res = await fetch("/.netlify/functions/matches");
-  const data = await res.json();
+
+const today = new Date().toLocaleDateString(“it-IT”);
+
+let data;
+
+const savedDate = localStorage.getItem(“savedDate”);
+const savedData = localStorage.getItem(“savedData”);
+
+if (savedDate === today && savedData) {
+
+data = JSON.parse(savedData);
+
+} else {
+
+const res = await fetch("/.netlify/functions/matches");
+data = await res.json();
+localStorage.setItem("savedDate", today);
+localStorage.setItem("savedData", JSON.stringify(data));
+
+}
   document.getElementById("api-counter").innerHTML =
    `API usate oggi: ${data.apiUsed}`;
   const matches = data.matches;
