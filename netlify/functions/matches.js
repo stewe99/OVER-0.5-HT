@@ -17,12 +17,15 @@ console.log("API KEY PRESENTE:", !!apiKey);
     console.log(JSON.stringify(data));
 
     const matches = data.response
-.filter(match => match.fixture.status.short === "NS")
-.slice(0, 20)
-.map(match => ({
-    home: match.teams.home.name,
-    away: match.teams.away.name,
-
+.filter(match =>
+   match.fixture.status.short === "NS" &&
+   (
+      match.league.country === "USA" ||
+      match.league.country === "Norway" ||
+      match.league.country === "Sweden"
+   )
+)
+.slice(0,20)
     kickoff: new Date(match.fixture.date)
       .toLocaleTimeString("it-IT", {
         hour: "2-digit",
