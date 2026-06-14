@@ -8,7 +8,6 @@ async function loadMatches() {
   const container = document.getElementById("matches");
   container.innerHTML = "";
 
-  container.innerHTML = "";
 
 matches.forEach(match => {
 
