@@ -41,6 +41,7 @@ console.log("API KEY PRESENTE:", !!apiKey);
       },
       body: JSON.stringify({
         date: today,
+        apiUsed: 1,
         matches
       })
     };
