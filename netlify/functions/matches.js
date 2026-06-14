@@ -31,7 +31,7 @@ console.log("API KEY PRESENTE:", !!apiKey);
 
     league: match.league.name,
 
-    score: 50
+    score: "-"
 }));
 
     return {
