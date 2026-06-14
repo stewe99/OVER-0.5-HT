@@ -40,7 +40,13 @@ console.log("API KEY PRESENTE:", !!apiKey);
 
     league: match.league.name,
 
-    score: "-"
+    score:
+  match.league.country === "Norway" ? 84 :
+  match.league.country === "Sweden" ? 82 :
+  match.league.country === "Denmark" ? 81 :
+  match.league.country === "Finland" ? 79 :
+  match.league.country === "USA" ? 78 :
+  75
 }));
 
     return {
