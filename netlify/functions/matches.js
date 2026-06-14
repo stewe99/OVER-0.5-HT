@@ -26,6 +26,10 @@ console.log("API KEY PRESENTE:", !!apiKey);
    )
 )
 .slice(0,20)
+.map(match => ({
+   home: match.teams.home.name,
+   away: match.teams.away.name,
+  
     kickoff: new Date(match.fixture.date)
       .toLocaleTimeString("it-IT", {
         hour: "2-digit",
