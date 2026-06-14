@@ -52,6 +52,9 @@ b.league.country === "USA" ? 78 :
 return scoreB - scoreA;
 
 })
+
+console.log("PARTITE TROVATE:", data.response.length);
+
 .slice(0,15)
 
 .map(match => {
