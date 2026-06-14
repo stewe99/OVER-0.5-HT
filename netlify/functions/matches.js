@@ -16,11 +16,23 @@ console.log("API KEY PRESENTE:", !!apiKey);
     const data = await response.json();
     console.log(JSON.stringify(data));
 
-    const matches = data.response.slice(0, 20).map(match => ({
-      home: match.teams.home.name,
-      away: match.teams.away.name,
-      score: 90 + (20 - (data.response.indexOf(match) % 20))
-    }));
+    const matches = data.response
+.filter(match => match.fixture.status.short === "NS")
+.slice(0, 20)
+.map(match => ({
+    home: match.teams.home.name,
+    away: match.teams.away.name,
+
+    kickoff: new Date(match.fixture.date)
+      .toLocaleTimeString("it-IT", {
+        hour: "2-digit",
+        minute: "2-digit"
+      }),
+
+    league: match.league.name,
+
+    score: 50
+}));
 
     return {
       statusCode: 200,
