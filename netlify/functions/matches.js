@@ -15,8 +15,6 @@ console.log("API KEY PRESENTE:", !!apiKey);
 
     const data = await response.json();
     console.log(JSON.stringify(data));
-    
-console.log("PARTITE TROVATE:", data.response.length);
 
     const matches = data.response
 .filter(match =>
