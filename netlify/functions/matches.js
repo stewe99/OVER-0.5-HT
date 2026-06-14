@@ -134,6 +134,8 @@ match.league.country === "Finland" ? "✅ GOOD" :
 "📈 PICK"
 };
 
+})
+
     return {
       statusCode: 200,
       headers: {
