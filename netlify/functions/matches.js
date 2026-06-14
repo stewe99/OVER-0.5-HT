@@ -125,17 +125,14 @@ return scoreB - scoreA;
       match.league.country === "Finland" ? 79 :
       match.league.country === "USA" ? 78 :
       75
-  };
 
-})
-  
 badge:
 match.league.country === "Norway" ? "🔥 TOP PICK" :
 match.league.country === "Sweden" ? "⭐ VALUE" :
 match.league.country === "Denmark" ? "💎 PREMIUM" :
 match.league.country === "Finland" ? "✅ GOOD" :
 "📈 PICK"
-}));
+};
 
     return {
       statusCode: 200,
