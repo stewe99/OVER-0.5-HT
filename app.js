@@ -30,7 +30,7 @@ matches.forEach(match => {
          ${match.league}
       </div>
 
-      <div class="badge">🔥 TOP PICK</div>
+      <div class="badge">${match.badge}</div>
 
    </div>
    `;
