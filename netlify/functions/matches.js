@@ -63,9 +63,55 @@ return scoreB - scoreA;
 
     league: match.league.name,
     
-    status: "⏳ DA GIOCARE",
-    result: "",
-    recovery: false,
+    status,
+    result,
+    recovery,
+    
+    const htGoals =
+(match.score?.halftime?.home || 0) +
+(match.score?.halftime?.away || 0);
+
+const ftGoals =
+(match.goals?.home || 0) +
+(match.goals?.away || 0);
+
+let status = "⏳ DA GIOCARE";
+let result = "";
+let recovery = false;
+
+if (match.fixture.status.short === "HT") {
+
+  if (htGoals > 0) {
+    status = "✅ WIN HT";
+    result = "OVER 0.5 HT PRESO";
+  } else {
+    status = "❌ LOSE HT";
+    result = "0-0 HT";
+    recovery = true;
+  }
+
+}
+
+if (match.fixture.status.short === "FT") {
+
+  if (htGoals > 0) {
+    status = "✅ WIN HT";
+    result = "OVER 0.5 HT PRESO";
+  } else {
+
+    if (ftGoals >= 2) {
+      status = "🔄 RECUPERO PRESO";
+      result = "OVER 1.5 FT WIN";
+      recovery = true;
+    } else {
+      status = "❌ RECUPERO PERSO";
+      result = "OVER 1.5 FT LOSE";
+      recovery = true;
+    }
+
+  }
+
+}
     
     htHome:
 match.score?.halftime?.home ?? null,
