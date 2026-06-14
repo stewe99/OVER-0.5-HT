@@ -1,6 +1,8 @@
 async function loadMatches() {
   const res = await fetch("/.netlify/functions/matches");
   const data = await res.json();
+  document.getElementById("api-counter").innerHTML =
+   `API usate oggi: ${data.apiUsed}`;
   const matches = data.matches;
 
   const container = document.getElementById("matches");
