@@ -24,8 +24,14 @@ localStorage.setItem("savedData", JSON.stringify(data));
    `API usate oggi: ${data.apiUsed}`;
   const matches = data.matches;
 
-  const container = document.getElementById("matches");
+    const container = document.getElementById("matches");
   container.innerHTML = "";
+
+  if (!matches || matches.length === 0) {
+     container.innerHTML = `<div style="text-align:center; color:#888; margin-top:40px;">Nessuna partita disponibile oggi con questi filtri.</div>`;
+     return;
+  }
+
 
 
 matches.forEach(match => {
