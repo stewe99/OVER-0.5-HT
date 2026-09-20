@@ -1,6 +1,7 @@
 exports.handler = async function () {
   const apiKey = process.env.API_FOOTBALL_KEY;
   console.log("API KEY PRESENTE:", !!apiKey);
+  
   try {
     const today = new Date().toISOString().split("T")[0];
 
@@ -14,15 +15,33 @@ exports.handler = async function () {
     );
 
     const data = await response.json();
-    console.log(JSON.stringify(data));
+    console.log("RISPOSTA API:", JSON.stringify(data));
+
+    // Controllo di sicurezza se l'API risponde con un errore o dati vuoti
+    if (!data.response || !Array.isArray(data.response)) {
+      return {
+        statusCode: 200,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          date: today,
+          apiUsed: 1,
+          matches: [],
+          errorFromApi: data.errors || "Risposta non valida dall'API"
+        })
+      };
+    }
 
     const matches = data.response
       .filter(match =>
+        match.fixture &&
+        match.fixture.status &&
         (
           match.fixture.status.short === "NS" ||
           match.fixture.status.short === "HT" ||
           match.fixture.status.short === "FT"
         ) &&
+        match.league &&
+        match.league.country &&
         (
           match.league.country === "USA" ||
           match.league.country === "Norway" ||
@@ -37,33 +56,19 @@ exports.handler = async function () {
         )
       )
       .sort((a, b) => {
-        const scoreA =
-          a.league.country === "Norway" ? 84 :
-          a.league.country === "Sweden" ? 82 :
-          a.league.country === "Denmark" ? 81 :
-          a.league.country === "Italy" ? 80 :
-          a.league.country === "England" ? 80 :
-          a.league.country === "Finland" ? 79 :
-          a.league.country === "USA" ? 78 :
-          a.league.country === "Spain" ? 77 :
-          a.league.country === "Germany" ? 77 :
-          a.league.country === "France" ? 76 :
-          75;
-
-        const scoreB =
-          b.league.country === "Norway" ? 84 :
-          b.league.country === "Sweden" ? 82 :
-          b.league.country === "Denmark" ? 81 :
-          b.league.country === "Italy" ? 80 :
-          b.league.country === "England" ? 80 :
-          b.league.country === "Finland" ? 79 :
-          b.league.country === "USA" ? 78 :
-          b.league.country === "Spain" ? 77 :
-          b.league.country === "Germany" ? 77 :
-          b.league.country === "France" ? 76 :
-          75;
-
-        return scoreB - scoreA;
+        const getScore = (match) => {
+          const c = match.league?.country;
+          if (c === "Norway") return 84;
+          if (c === "Sweden") return 82;
+          if (c === "Denmark") return 81;
+          if (c === "Italy" || c === "England") return 80;
+          if (c === "Finland") return 79;
+          if (c === "USA") return 78;
+          if (c === "Spain" || c === "Germany") return 77;
+          if (c === "France") return 76;
+          return 75;
+        };
+        return getScore(b) - getScore(a);
       })
       .slice(0, 15)
       .map(match => {
@@ -107,58 +112,30 @@ exports.handler = async function () {
           }
         }
 
+        const c = match.league?.country;
+
         return {
-          home: match.teams.home.name,
-          away: match.teams.away.name,
-
-          kickoff: new Date(match.fixture.date)
-            .toLocaleTimeString("it-IT", {
-              timeZone: "Europe/Rome",
-              hour: "2-digit",
-              minute: "2-digit"
-            }),
-
-          league: match.league.name,
-
+          home: match.teams?.home?.name || "Home",
+          away: match.teams?.away?.name || "Away",
+          kickoff: match.fixture?.date ? new Date(match.fixture.date).toLocaleTimeString("it-IT", {
+            timeZone: "Europe/Rome",
+            hour: "2-digit",
+            minute: "2-digit"
+          }) : "--:--",
+          league: match.league?.name || "League",
           status,
           result,
           recovery,
-
           htHome: match.score?.halftime?.home ?? null,
           htAway: match.score?.halftime?.away ?? null,
-
-          score:
-            match.league.country === "Norway" ? 84 :
-            match.league.country === "Sweden" ? 82 :
-            match.league.country === "Denmark" ? 81 :
-            match.league.country === "Italy" ? 80 :
-            match.league.country === "England" ? 80 :
-            match.league.country === "Finland" ? 79 :
-            match.league.country === "USA" ? 78 :
-            match.league.country === "Spain" ? 77 :
-            match.league.country === "Germany" ? 77 :
-            match.league.country === "France" ? 76 :
-            75,
-
-          badge:
-            match.league.country === "Norway" ? "🔥 TOP PICK" :
-            match.league.country === "Sweden" ? "⭐ VALUE" :
-            match.league.country === "Denmark" ? "💎 PREMIUM" :
-            match.league.country === "Italy" ? "⚽ SERIE A/TOP" :
-            match.league.country === "England" ? "⚽ PREMIER" :
-            match.league.country === "Finland" ? "✅ GOOD" :
-            match.league.country === "Spain" ? "🎯 LIGA" :
-            match.league.country === "Germany" ? "🎯 BUNDES" :
-            match.league.country === "France" ? "🎯 LIGUE 1" :
-            "📈 PICK"
+          score: c === "Norway" ? 84 : c === "Sweden" ? 82 : c === "Denmark" ? 81 : 80,
+          badge: c === "Norway" ? "🔥 TOP PICK" : c === "Italy" ? "⚽ SERIE A" : "📈 PICK"
         };
       });
 
     return {
       statusCode: 200,
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         date: today,
         apiUsed: 1,
@@ -166,11 +143,10 @@ exports.handler = async function () {
       })
     };
   } catch (error) {
+    console.error("ERRORE NELLA FUNZIONE:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        error: error.message
-      })
+      body: JSON.stringify({ error: error.message })
     };
   }
 };
