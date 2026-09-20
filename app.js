@@ -1,3 +1,5 @@
+localStorage.clear(); // <-- Aggiungilo temporaneamente qui per pulire la cache
+
 async function loadMatches() {
 
 const today = new Date().toLocaleDateString("it-IT");
