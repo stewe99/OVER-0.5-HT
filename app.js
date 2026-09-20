@@ -1,89 +1,75 @@
-localStorage.clear(); // <-- Aggiungilo temporaneamente qui per pulire la cache
-
 async function loadMatches() {
+  const today = new Date().toLocaleDateString("it-IT");
+  let data;
 
-const today = new Date().toLocaleDateString("it-IT");
+  const savedDate = localStorage.getItem("savedDate");
+  const savedData = localStorage.getItem("savedData");
 
-let data;
+  if (savedDate === today && savedData) {
+    data = JSON.parse(savedData);
+  } else {
+    const res = await fetch("/.netlify/functions/functions/matches"); // oppure /.netlify/functions/matches in base al tuo percorso
+    data = await res.json();
+    localStorage.setItem("savedDate", today);
+    localStorage.setItem("savedData", JSON.stringify(data));
+  }
 
-const savedDate = localStorage.getItem("savedDate");
-const savedData = localStorage.getItem("savedData");
-
-if (savedDate === today && savedData) {
-
-data = JSON.parse(savedData);
-
-} else {
-
-const res = await fetch("/.netlify/functions/matches");
-data = await res.json();
-localStorage.setItem("savedDate", today);
-localStorage.setItem("savedData", JSON.stringify(data));
-}
   document.getElementById("api-counter").innerHTML =
-   `API usate oggi: ${data.apiUsed}`;
+    `API usate oggi: ${data.apiUsed}`;
+  
   const matches = data.matches;
-
-    const container = document.getElementById("matches");
+  const container = document.getElementById("matches");
   container.innerHTML = "";
 
-  if (!matches || matches.length === 0) {
-     container.innerHTML = `<div style="text-align:center; color:#888; margin-top:40px;">Nessuna partita disponibile oggi con questi filtri.</div>`;
-     return;
-  }
+  matches.forEach(match => {
+     container.innerHTML += `
+     <div class="card">
 
+        <div class="score">${match.score}%</div>
 
+        <div class="match">
+           ${match.home}<br>
+           vs<br>
+           ${match.away}
+        </div>
 
-matches.forEach(match => {
+        <div style="margin-top:10px;font-size:15px;color:#bbb;">
+           🕒 ${match.kickoff}
+        </div>
 
-   container.innerHTML += `
-   <div class="card">
+        <div style="margin-top:6px;font-size:14px;color:#888;">
+           ${match.league}
+        </div>
 
-      <div class="score">${match.score}%</div>
+        <div class="badge">${match.badge}</div>
+       
+        <div style="margin-top:12px">
 
-      <div class="match">
-         ${match.home}<br>
-         vs<br>
-         ${match.away}
-      </div>
+          <div style="font-weight:bold;color:#fff;">
+            ${match.status}
+          </div>
 
-      <div style="margin-top:10px;font-size:15px;color:#bbb;">
-         🕒 ${match.kickoff}
-      </div>
+          ${match.result ? `
+            <div style="margin-top:6px;color:#7ee787;">
+              ${match.result}
+            </div>
+          ` : ""}
 
-      <div style="margin-top:6px;font-size:14px;color:#888;">
-         ${match.league}
-      </div>
+          ${
+            match.htHome !== null
+              ? `
+              <div style="margin-top:6px;color:#bbb;">
+                HT: ${match.htHome}-${match.htAway}
+              </div>
+              `
+              : ""
+          }
 
-  <div class="badge">${match.badge}</div>
- 
-  <div style="margin-top:12px">
+        </div>
 
-  <div style="font-weight:bold;color:#fff;">
-    ${match.status}
-  </div>
-
-  ${match.result ? `
-    <div style="margin-top:6px;color:#7ee787;">
-      ${match.result}
-    </div>
-  ` : ""}
-
-  ${
-    match.htHome !== null
-      ? `
-      <div style="margin-top:6px;color:#bbb;">
-        HT: ${match.htHome}-${match.htAway}
-      </div>
-      `
-      : ""
-  }
-
-      </div>
-
-   </div>
-   `;
-});
+     </div>
+     `;
+  });
 }
 
 loadMatches();
